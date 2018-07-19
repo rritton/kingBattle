@@ -1,0 +1,12 @@
+.photo{
+	width:4em;
+	height:4em;
+	border: solid darkgrey 0.06em;
+	margin-top: -4px;
+	padding: 0;
+}
+body{
+	display: flex;
+	flex-flow: column;
+	align-items: center;
+}]
