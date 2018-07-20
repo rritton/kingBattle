@@ -14,9 +14,15 @@ plateauAffich();
 
 moveAutorise(50);
 
+/**
+ * Generation du plateau de jeu
+ * @returns
+ */
 function plateauGenerate() {
-	nbRock = getRandomInt(10, 16);
-	nbArme = getRandomInt(1, 5);
+	nbRock = getRandomInt(10, 16);		//génération du nombre de case interdite
+										//entre 10 et 15 
+	nbArme = getRandomInt(1, 5);		//génération du nombre d'arme
+										//entre 1 et 4
 
 	// Instalation des cases interdites
 	for (var i = 0; i < nbRock; i++) {
@@ -28,7 +34,6 @@ function plateauGenerate() {
 			}
 		}
 	}
-
 	// Instalation des armes
 	for (var i = 0; i < nbArme; i++) {
 		while (1) {
@@ -39,7 +44,6 @@ function plateauGenerate() {
 			}
 		}
 	}
-
 	// Instalation Joueur 1
 	while (1) {
 		var cas = getRandomInt(0, 100);
@@ -71,41 +75,54 @@ function plateauGenerate() {
 			break;
 		}
 	}
-
 }
 
+/**
+ * Affichage du plateau de jeu
+ * 
+ * @returns
+ */
 function plateauAffich() {
 	var ecrasement = "";
-	for (var i = 0; i < 10; i++) {
-		for (var j = 0; j < 10; j++) {
-			switch (plateau[10 * i + j]) {
-			case 0:
+	for (var i = 0; i < 10; i++) {				//boucle sur les lignes
+		for (var j = 0; j < 10; j++) {			//boucle sur les colonnes
+			switch (plateau[10 * i + j]) {		//mesure de la valeur associé à la case
+			
+			case 0:			//case vide 
 				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
 						+ '" src="../imgFiles/texture.jpg">';
 				break;
-			case 1:
+			case 1:			//case interdite
 				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
 						+ '" src="../imgFiles/dark.jpg">';
 				break;
-			case 2:
+			case 2:			//case avec une arme
 				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
 						+ '" src="../imgFiles/grenade.jpg">';
 				break;
-			case 3:
+			case 3:			//case du joueur 1
 				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
 						+ '" src="../imgFiles/Brand.png">';
 				break;
-			case 5:
+			case 5:			//case du joueur 2
 				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
 						+ '" src="../imgFiles/Jinx.png">';
 				break;
 			}
 		}
-		ecrasement += '<br>';
+		ecrasement += '<br>';			//changement de ligne
 	}
+				//Ecrasement de lancien affichage par le nouveau
 	document.getElementById('zoneDeJeu').innerHTML = ecrasement;
 }
 
+/**
+ * Generation d'un affichage des case autorisées au déplacement
+ * pour un personnage placé sur une @position donnée
+ * 
+ * @param position
+ * @returns
+ */
 function moveAutorise(position) {
 	for (k = -3; k < 3; k++) {
 		// test des positions aux bords pour ne pas sortir du plateau de jeu
@@ -114,7 +131,8 @@ function moveAutorise(position) {
 				|| ((position % 10) >= 7 && (position + k) < 3)) {
 			continue;
 		}
-		if (plateau[position + k] == 0) {
+		//Test si la case est libre ou a une arme (la valeur associée est paire)
+		if (plateau[position + k]%2 == 0 ) {
 			var j = (position + k) % 10;
 			var i = ((position + k) - j) / 10;
 			$(function() {
@@ -125,12 +143,14 @@ function moveAutorise(position) {
 	}
 }
 
+
 /**
- * Generation de nombre entier aléatoire
+ * Generation de nombre entier aléatoire 
+ * entre la valeur @min (comprise) et la valeur @max (non-comprise)
  * 
  * @param min
  * @param max
- * @returns
+ * @returns un entier
  */
 function getRandomInt(min, max) {
 	min = Math.ceil(min);
