@@ -1,3 +1,7 @@
+/**
+ * Fonction main du jeu
+ * @returns
+ */
 function jeu(){
 	console.log('lancement du jeu');
 	var plateau = [ 100 ]; // creation du plateau de 10x10
@@ -14,13 +18,19 @@ function jeu(){
 	plateauGenerate(plateau);
 	plateauAffich(plateau);
 
-	moveAutorise(plateau, 50);
+	moveAutorise(plateau, 0);
+	moveAutorise(plateau, 9);
+	moveAutorise(plateau, 45);
+	moveAutorise(plateau, 90);
+	moveAutorise(plateau, 99);
 
-	
+
 }
 
 /**
- * Generation du plateau de jeu
+ * Génération du @plateau de jeu
+ * 
+ * @param plateau
  * @returns
  */
 function plateauGenerate(plateau) {
@@ -41,11 +51,16 @@ function plateauGenerate(plateau) {
 		}
 	}
 	// Instalation des armes
-	for (var i = 0; i < nbArme; i++) {
+	for (var i = 0, numArme = 0, tabArmes = []; i < nbArme; i++) {
+		numArme = getRandomInt(0,5)+1;
+		if(tabArmes.indexOf(numArme) != -1){
+			continue;
+		}
+		tabArmes.push(numArme);
 		while (1) {
 			var cas = getRandomInt(0, 100);
 			if (plateau[cas] == 0) {
-				plateau[cas] = 2;
+				plateau[cas] = 2*numArme;
 				break;
 			}
 		}
@@ -84,8 +99,9 @@ function plateauGenerate(plateau) {
 }
 
 /**
- * Affichage du plateau de jeu
+ * Affichage du @plateau de jeu
  * 
+ * @param plateau
  * @returns
  */
 function plateauAffich(plateau) {
@@ -96,24 +112,41 @@ function plateauAffich(plateau) {
 			switch (plateau[10 * i + j]) {		//mesure de la valeur associé à la case
 
 			case 0:			//case vide 
-				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
+				ecrasement += '<img class="photo" id="case'+i+j
 				+ '" src="../imgFiles/texture.jpg">';
 				break;
 			case 1:			//case interdite
-				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
+				ecrasement += '<img class="photo" id="case'+i+j
 				+ '" src="../imgFiles/dark.jpg">';
 				break;
-			case 2:			//case avec une arme
-				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
-				+ '" src="../imgFiles/grenade.jpg">';
-				break;
 			case 3:			//case du joueur 1
-				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
+				ecrasement += '<img class="photo" id="case'+i+j
 				+ '" src="../imgFiles/Brand.png">';
 				break;
 			case 5:			//case du joueur 2
-				ecrasement += '<img class="photo colonne' + j + ' ligne' + i
+				ecrasement += '<img class="photo" id="case'+i+j
 				+ '" src="../imgFiles/Jinx.png">';
+				break;
+					//case avec des armes
+			case 2:			//case avec une arme : grenade
+				ecrasement += '<img class="photo" id="case'+i+j
+				+ '" src="../imgFiles/grenade.jpg">';
+				break;
+			case 4:			//case avec une arme : bazooka
+				ecrasement += '<img class="photo" id="case'+i+j
+				+ '" src="../imgFiles/bazooka.jpg">';
+				break;
+			case 6:			//case avec une arme : corde à sauter
+				ecrasement += '<img class="photo" id="case'+i+j
+				+ '" src="../imgFiles/corde_sauter.jpg">';
+				break;
+			case 8:			//case avec une arme : hache
+				ecrasement += '<img class="photo" id="case'+i+j
+				+ '" src="../imgFiles/hache.jpg">';
+				break;
+			case 10:		//case avec une arme : point de feu
+				ecrasement += '<img class="photo" id="case'+i+j
+				+ '" src="../imgFiles/point_fire.jpg">';
 				break;
 			}
 		}
@@ -130,13 +163,14 @@ function plateauAffich(plateau) {
 
 /**
  * Generation d'un affichage des case autorisées au déplacement
- * pour un personnage placé sur une @position donnée
+ * pour un personnage placé sur une @position donnée du @plateau
  * 
+ * @param plateau
  * @param position
  * @returns
  */
 function moveAutorise(plateau, position) {
-	console.log('verification des mouvements');
+	console.log('verification des mouvements en '+position);
 
 	//gesstion des cases adjacentes horizontalement
 	for (k = -3; k <= 3; k++) {
@@ -151,13 +185,8 @@ function moveAutorise(plateau, position) {
 		if (plateau[position + k]%2 == 0 ) {
 			var j = (position + k) % 10;
 			var i = ((position + k) - j) / 10;
-			$(function() {
-				$('colonne' + j + ' ligne' + i).css('border', 'black').css(
-						'box-shadow', '0.1em 0.1em 0.1em black');
-				console.log("'colonne' + j + ' ligne' + i).css('border', 'black').css("
-						+"'box-shadow', '0.1em 0.1em 0.1em black'");
-			});
-			console.log('('+i+','+j+')');
+			document.getElementById('case'+i+j).style.border = 'solid black 0.06em';
+			document.getElementById('case'+i+j).style.boxShadow = '0.2em 0.2em 0.2em black';
 		}
 	}
 
@@ -172,11 +201,8 @@ function moveAutorise(plateau, position) {
 		if (plateau[position + 10*k]%2 == 0 ) {
 			var j = (position + 10*k) % 10;
 			var i = ((position + 10*k) - j) / 10;
-			$(function() {
-				$('colonne' + j + ' ligne' + i).css('border', 'black').css(
-						'box-shadow', '0.1em 0.1em 0.1em black');
-			});
-			console.log('('+i+','+j+')');
+			document.getElementById('case'+i+j).style.border = 'solid black 0.06em';
+			document.getElementById('case'+i+j).style.boxShadow = '0.2em 0.2em 0.2em black';
 		}
 	}
 }
@@ -185,6 +211,8 @@ function moveAutorise(plateau, position) {
 /**
  * Generation de nombre entier aléatoire 
  * entre la valeur @min (comprise) et la valeur @max (non-comprise)
+ * 
+ * Récupéré sur developer.mozilla.org
  * 
  * @param min
  * @param max
