@@ -1,24 +1,30 @@
-var plateau = [ 100 ]; // creation du plateau de 10x10
-var nbRock = 0; // variable du nombre de cases interdites
-var nbArme = 0; // variable du nombre d'armes
+function jeu(){
+	console.log('lancement du jeu');
+	var plateau = [ 100 ]; // creation du plateau de 10x10
+	var nbRock = 0; // variable du nombre de cases interdites
+	var nbArme = 0; // variable du nombre d'armes
 
-//initialisation des case à "libre"
-for (var i = 0; i < 10; i++) {
-	for (var j = 0; j < 10; j++) {
-		plateau[i * 10 + j] = 0;
+	//initialisation des case à "libre"
+	for (var i = 0; i < 10; i++) {
+		for (var j = 0; j < 10; j++) {
+			plateau[i * 10 + j] = 0;
+		}
 	}
+
+	plateauGenerate(plateau);
+	plateauAffich(plateau);
+
+	moveAutorise(plateau, 50);
+
+	
 }
-
-plateauGenerate();
-plateauAffich();
-
-moveAutorise(50);
 
 /**
  * Generation du plateau de jeu
  * @returns
  */
-function plateauGenerate() {
+function plateauGenerate(plateau) {
+	console.log('appelle du générateur de plateau');
 	nbRock = getRandomInt(10, 16);		//génération du nombre de case interdite
 	//entre 10 et 15 
 	nbArme = getRandomInt(1, 5);		//génération du nombre d'arme
@@ -82,7 +88,8 @@ function plateauGenerate() {
  * 
  * @returns
  */
-function plateauAffich() {
+function plateauAffich(plateau) {
+	console.log('affichage du plateau');
 	var ecrasement = "";
 	for (var i = 0; i < 10; i++) {				//boucle sur les lignes
 		for (var j = 0; j < 10; j++) {			//boucle sur les colonnes
@@ -128,13 +135,12 @@ function plateauAffich() {
  * @param position
  * @returns
  */
-function moveAutorise(position) {
-	console.log('Bienvenue dans la fonction moveAutorise');
+function moveAutorise(plateau, position) {
+	console.log('verification des mouvements');
 
 	//gesstion des cases adjacentes horizontalement
 	for (k = -3; k <= 3; k++) {
 		// test des positions aux bords pour ne pas sortir du plateau de jeu
-		console.log('Position test : '+(position+k));
 		if (k==0 || (position + k) < 0 || (position + k) >= 100			//sortie au-dessous ou au-dessus (pour premières et dernières cases)
 				|| ((position % 10 < 3) && ((position + k)%10 >= 7))	//sortie à gauche
 				|| ((position % 10 >= 7) && ((position + k)%10 < 3))) {	//sortie à droite
@@ -142,13 +148,14 @@ function moveAutorise(position) {
 		}
 
 		//Test si la case est libre ou a une arme (la valeur associée est paire)
-		console.log(plateau[position + k]%2);
 		if (plateau[position + k]%2 == 0 ) {
 			var j = (position + k) % 10;
 			var i = ((position + k) - j) / 10;
 			$(function() {
 				$('colonne' + j + ' ligne' + i).css('border', 'black').css(
 						'box-shadow', '0.1em 0.1em 0.1em black');
+				console.log("'colonne' + j + ' ligne' + i).css('border', 'black').css("
+						+"'box-shadow', '0.1em 0.1em 0.1em black'");
 			});
 			console.log('('+i+','+j+')');
 		}
@@ -157,13 +164,11 @@ function moveAutorise(position) {
 	//gesstion des cases adjacentes verticalement
 	for (k = -3; k <= 3; k++) {
 		// test des positions aux bords pour ne pas sortir du plateau de jeu
-		console.log('Position test : '+(position+10*k));
 		if (k==0 || (position + 10*k) < 0 || (position + 10*k) >= 100) {	//sortie au-dessous ou au-dessus
 			continue;
 		}
 
 		//Test si la case est libre ou a une arme (la valeur associée est paire)
-		console.log(plateau[position + k]%2);
 		if (plateau[position + 10*k]%2 == 0 ) {
 			var j = (position + 10*k) % 10;
 			var i = ((position + 10*k) - j) / 10;
