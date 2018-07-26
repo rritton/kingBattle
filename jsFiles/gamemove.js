@@ -170,7 +170,25 @@ function plateauAffich(plateau) {
  * @returns
  */
 function moveAutorise(plateau, position) {
-	console.log('verification des mouvements en '+position);
+	console.log('verification des mouvements en '+position+' V2');
+
+	for(var i=0; i<10; i++) {
+		for(var j=0; j<10; j++) {
+			//Les cases hors du carré 7x7 centré sur @position
+			if(Math.abs(10*i+j-position) > 30 || Math.abs(j-position%10) > 3) {
+				document.getElementById('case'+i+j).style.opacity = 0.5;
+			}
+			//Les cases qui sont dans la croix
+			else if(position%10 == j || (position-j) == i) {	//même collone ou même ligne
+				document.getElementById('case'+i+j).style.border = 'solid black 0.06em';
+			}
+			//Les dernières cases du carré
+			else {
+				document.getElementById('case'+i+j).style.opacity = 0.5;
+			}
+		}
+	}
+}
 
 	//gesstion des cases adjacentes horizontalement
 	for (k = -3; k <= 3; k++) {
@@ -202,7 +220,7 @@ function moveAutorise(plateau, position) {
 			var j = (position + 10*k) % 10;
 			var i = ((position + 10*k) - j) / 10;
 			document.getElementById('case'+i+j).style.border = 'solid black 0.06em';
-			document.getElementById('case'+i+j).style.boxShadow = '0.2em 0.2em 0.2em black';
+			document.getElementById('case'+i+j).style.boxShadow = '0.2em 0.2em 0.2em black, -0.2em -0.2em 0.2em black';
 		}
 	}
 }
