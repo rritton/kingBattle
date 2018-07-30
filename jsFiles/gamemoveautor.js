@@ -13,7 +13,7 @@ function moveAutorise(plateau, position) {
 
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
-			// Les cases hors du "carré" 7x7 centré sur @position + @position
+			// Les cases hors du "carré" 7x7 centré sur @position & @position
 			if (Math.abs(10 * i + j - position) > 30	// lignes trop éloignées
 					|| Math.abs(j - position % 10) > 3	// collones trop éloignées
 					|| 10 * i + j == position) {		// @position
@@ -24,51 +24,39 @@ function moveAutorise(plateau, position) {
 				switch((10*i+j - position)/10){		//mesure de l'éloignement
 				case -3: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j+10]%2 == 0 && plateau[10*i+j+20]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case 3: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j-10]%2 == 0 && plateau[10*i+j-20]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case -2: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j+10]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case 2: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j-10]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case -1: 
 					if(plateau[10*i+j]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case 1: 
 					if(plateau[10*i+j]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				default :
 				caseNon(i,j);
@@ -79,46 +67,36 @@ function moveAutorise(plateau, position) {
 				switch(j-position%10){					//mesure de l'éloignement
 				case -3: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j+1]%2 == 0 && plateau[10*i+j+2]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case 3: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j-1]%2 == 0 && plateau[10*i+j-2]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case -2: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j+1]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case 2: 
 					if(plateau[10*i+j]%2 == 0 && plateau[10*i+j-1]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case -1: 
 					if(plateau[10*i+j]%2 == 0){
-						caseOui(plateau,position,i,j);
+						caseOui(position,i,j);
 					}
-					else {
-						caseNon(i,j);
-					}
+					else {caseNon(i,j);	}
 					break;
 				case 1: 
-					if(plateau[10*i+j]%2 == 0) {caseOui(plateau,position,i,j);}
+					if(plateau[10*i+j]%2 == 0) {caseOui(position,i,j);}
 					else {caseNon(i,j);}
 					break;
 				default :
@@ -126,9 +104,7 @@ function moveAutorise(plateau, position) {
 				}
 			}
 			//case hors croix
-			else {
-				caseNon(i,j);
-			}
+			else {caseNon(i,j);	}
 		}
 	}
 }
@@ -139,12 +115,11 @@ function moveAutorise(plateau, position) {
  * @param j
  * @returns
  */
-function caseOui(plateau,position,i,j){
+function caseOui(position,i,j){
 	document.getElementById('case' + i + j).style.border = 'solid black 0.06em';
 	document.getElementById('case' + i + j).style.cursor ='pointer';
 	document.getElementById('case' + i + j).setAttribute('onclick',
-			'deplacement('+plateau+','+position+','+i+','+j+');');
-	console.log('On peut bouger de '+position+' vers ('+i+','+j+')');
+			'deplacement('+position+','+i+','+j+');');
 }
 
 /**

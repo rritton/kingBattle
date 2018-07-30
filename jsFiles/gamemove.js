@@ -96,6 +96,7 @@ function plateauGenerate(plateau) {
 
 /**
  * Affichage du @plateau de jeu
+ * passage du tableau 10X10 en HTML
  * 
  * @param plateau
  * @returns
@@ -164,17 +165,24 @@ function plateauAffich(plateau) {
  * @param i
  * @param j
  * @returns
- * @version 1.0
+ * @version 2.0
  */
-function deplacement(plateau,position,i,j){
-	console.log('On va bouger de '+position+' vers ('+i+','+j+')');
-	console.log(plateau[40]);
-	//pour l'instant on echange les deux cases via un échange des valeurs dans le plateau
-	var transfert = plateau[position];
-	plateau[position] = plateau[10*i+j];
-	plateau[10*i+j] = transfert;
-//	plateauAffich(plateau);
-	console.log(plateau[40]);
+function deplacement(position,i,j){
+	
+	var caseDepart = document.getElementById('case'+position);
+	var caseArive = document.getElementById('case'+i+j);
+	var transfert = caseDepart.src;
+	
+	caseDepart.src = caseArive.src;
+	caseArive.src = transfert;
 }
 
-
+/**
+ * Une fonction qui fait l'inverse de plateauAffich
+ * génère un tableau 10x10 à partir du HTML
+ * @returns
+ */
+function majPlateau(){
+	var plateauImg = document.getElementsByTagName('img');
+	var plateau = [100];	
+}
