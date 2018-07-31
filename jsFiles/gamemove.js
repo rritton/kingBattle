@@ -5,19 +5,9 @@
  */
 function jeu() {
 	console.log('lancement du jeu');
-	var plateau = [ 100 ]; // creation du plateau de 10x10
-	var nbRock = 0; // variable du nombre de cases interdites
-	var nbArme = 0; // variable du nombre d'armes
 
-	// initialisation des case à "libre"
-	for (var i = 0; i < 10; i++) {
-		for (var j = 0; j < 10; j++) {
-			plateau[i * 10 + j] = 0;
-		}
-	}
-
-	plateauGenerate(plateau);
-	plateauAffich(plateau);
+	plateauGenerate();
+	plateauAffich();
 
 	moveAutorise(plateau, 45);
 
@@ -29,8 +19,19 @@ function jeu() {
  * @param plateau
  * @returns
  */
-function plateauGenerate(plateau) {
+function plateauGenerate() {
 	console.log('appelle du générateur de plateau');
+	var plateau = [ 100 ]; // creation du plateau de 10x10
+	var nbRock = 0; // variable du nombre de cases interdites
+	var nbArme = 0; // variable du nombre d'armes
+
+	// initialisation des case à "libre"
+	for (var i = 0; i < 10; i++) {
+		for (var j = 0; j < 10; j++) {
+			plateau[i * 10 + j] = 0;
+		}
+	}
+	
 	nbRock = getRandomInt(10, 16); // génération du nombre de case interdite
 	// entre 10 et 15
 	nbArme = getRandomInt(1, 5); // génération du nombre d'arme
@@ -92,6 +93,7 @@ function plateauGenerate(plateau) {
 			break;
 		}
 	}
+	savePlateau(plateau);
 }
 
 /**
@@ -101,9 +103,10 @@ function plateauGenerate(plateau) {
  * @param plateau
  * @returns
  */
-function plateauAffich(plateau) {
+function plateauAffich() {
 	console.log('affichage du plateau');
 	var ecrasement = "";
+	var plateau = getPlateau();
 	for (var i = 0; i < 10; i++) { // boucle sur les lignes
 		for (var j = 0; j < 10; j++) { // boucle sur les colonnes
 			switch (plateau[10 * i + j]) { // mesure de la valeur associé à la case
@@ -158,9 +161,8 @@ function plateauAffich(plateau) {
 }
 
 /**
- * Déplacement  sur le @plateau depuis une @position vers la case (@i,@j)
+ * Déplacement  sur le plateau depuis une @position vers la case (@i,@j)
  * 
- * @plateau
  * @param position
  * @param i
  * @param j
@@ -168,64 +170,17 @@ function plateauAffich(plateau) {
  * @version 2.0
  */
 function deplacement(position,i,j){
+
+	var plateau = getPlateau();
+	var caseDepart = plateau[position];
+	var caseArive = plateau[10*i+j];
 	
-	var caseDepart = document.getElementById('case'+position);
-	var caseArive = document.getElementById('case'+i+j);
-	var transfert = caseDepart.src;
+	plateau[position] = caseArive;
+	plateau[10*i+j] = caseDepart;
 	
-	caseDepart.src = caseArive.src;
-	caseArive.src = transfert;
-	
-	var plateau = majPlateau();
-	plateauAffich(plateau);
+	savePlateau(plateau);
+	plateauAffich();
 	moveAutorise(plateau, 45);
 	
 }
 
-/**
- * Une fonction qui fait l'inverse de plateauAffich
- * lit quelle est l'image affichée pour recréer un plateau
- * génère un tableau 10x10 à partir du HTML
- * @returns
- */
-function majPlateau(){
-	console.log('majPlateau');
-	var plateauImg = document.getElementsByTagName('img');
-	var plateau = [100] ;	
-	
-	for(var i = 0; i<100; i++){
-		switch(plateauImg[i].src.slice(plateauImg[i].src.lastIndexOf("/"))){//lit quelle est l'image
-
-		case "/texture.jpg": // case vide
-			plateau[i] = 0;
-			break;
-		case "/dark.jpg": // case interdite
-			plateau[i] = 1;
-			break;
-		case "/Brand.png": // case du joueur 1
-			plateau[i] = 3;
-			break;
-		case "/Jinx.png": // case du joueur 2
-			plateau[i] = 5;
-			break;
-			// case avec des armes
-		case "/grenade.jpg": // case avec une arme : grenade
-			plateau[i] = 2;
-			break;
-		case "/bazooka.jpg": // case avec une arme : bazooka
-			plateau[i] = 4;
-			break;
-		case "/corde_sauter.jpg": // case avec une arme : corde à sauter
-			plateau[i] = 6;
-			break;
-		case "/point_fire.jpg": // case avec une arme : point de feu
-			plateau[i] = 8;
-			break;
-		case "/hache.jpg": // case avec une arme : hache
-			plateau[i] = 10;
-			break;
-		}
-	}
-	
-	return plateau;
-}
