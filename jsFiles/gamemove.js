@@ -180,7 +180,10 @@ function deplacement(position,i,j){
 	
 	savePlateau(plateau);
 	plateauAffich();
-	moveAutorise(45);
+	if(caseDepart == 5){
+	moveAutorise(ouEstLeJoueur(1));
+	}
+	else {moveAutorise(ouEstLeJoueur(2));}
 	
 }
 

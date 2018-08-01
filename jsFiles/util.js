@@ -27,3 +27,16 @@ function savePlateau(plateau){
 	var plateauString = plateau.join();
 	sessionStorage.setItem('plateau',plateauString);
 }
+
+function ouEstLeJoueur(joueur){
+	var plateau = getPlateau();
+	for(var i =0; i<100; i++){
+		if(joueur==1 && plateau[i]==3){
+			return i;
+		}
+
+		if(joueur==2 && plateau[i]==5){
+			return i;
+		}
+	}
+}
