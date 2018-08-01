@@ -9,7 +9,7 @@ function jeu() {
 	plateauGenerate();
 	plateauAffich();
 
-	moveAutorise(45);
+	moveAutorise(ouEstLeJoueur(getRandomInt(1, 3)));
 
 }
 

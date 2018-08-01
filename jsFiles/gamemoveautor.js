@@ -14,10 +14,12 @@ function moveAutorise(position) {
 
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
+			//le joueur actif
+			if (10 * i + j == position){} //do nothing
 			// Les cases hors du "carré" 7x7 centré sur @position & @position
-			if (Math.abs(10 * i + j - position) > 30	// lignes trop éloignées
-					|| Math.abs(j - position % 10) > 3	// collones trop éloignées
-					|| 10 * i + j == position) {		// @position
+			else if (Math.abs(10 * i + j - position) > 30		// lignes trop éloignées
+					|| Math.abs(j - position % 10) > 3) {	// collones trop éloignées
+					
 				document.getElementById('case' + i + j).style.opacity = 0.5;
 			}
 			// Les cases qui sont dans la croix
