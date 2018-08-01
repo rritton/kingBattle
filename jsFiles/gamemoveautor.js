@@ -8,8 +8,9 @@
  * @returns
  * @version 2.0
  */
-function moveAutorise(plateau, position) {
+function moveAutorise(position) {
 	console.log('verification des mouvements en ' + position + ' V2');
+	var plateau = getPlateau();
 
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {

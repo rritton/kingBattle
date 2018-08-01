@@ -9,7 +9,7 @@ function jeu() {
 	plateauGenerate();
 	plateauAffich();
 
-	moveAutorise(plateau, 45);
+	moveAutorise(45);
 
 }
 
@@ -180,7 +180,7 @@ function deplacement(position,i,j){
 	
 	savePlateau(plateau);
 	plateauAffich();
-	moveAutorise(plateau, 45);
+	moveAutorise(45);
 	
 }
 

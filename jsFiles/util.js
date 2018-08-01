@@ -16,7 +16,6 @@ function getRandomInt(min, max) {
 
 function getPlateau(){
 	var plateauStringTable = sessionStorage.getItem('plateau');
-	console.log(plateauStringTable);
 	var plateau = [ 100 ];
 	for(var i = 0; i < 200 ;i +=2){
 		plateau[i/2] = parseInt(plateauStringTable[i]);
