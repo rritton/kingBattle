@@ -84,8 +84,7 @@ function plateauGenerate() {
 			continue;
 		}
 		// les joueurs ne peuvent être cote à cote
-		if (plateau[cas - 1] == 3 || plateau[cas + 1] == 3
-				|| plateau[cas - 10] == 3 || plateau[cas + 10] == 3) {
+		if (voisin(cas)) {
 			continue;
 		}
 		if (plateau[cas] == 0) {
@@ -177,13 +176,18 @@ function deplacement(position,i,j){
 	
 	plateau[position] = caseArive;
 	plateau[10*i+j] = caseDepart;
-	
+
 	savePlateau(plateau);
-	plateauAffich();
-	if(caseDepart == 5){
-	moveAutorise(ouEstLeJoueur(1));
-	}
-	else {moveAutorise(ouEstLeJoueur(2));}
 	
+	if(voisin(10*i+j)){
+		lancementCombat();
+	}
+	else{
+		plateauAffich();
+		if(caseDepart == 5){
+			moveAutorise(ouEstLeJoueur(1));
+		}
+		else {moveAutorise(ouEstLeJoueur(2));}
+	}
 }
 
