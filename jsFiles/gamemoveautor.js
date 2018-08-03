@@ -19,8 +19,7 @@ function moveAutorise(position) {
 			// Les cases hors du "carré" 7x7 centré sur @position & @position
 			else if (Math.abs(10 * i + j - position) > 30		// lignes trop éloignées
 					|| Math.abs(j - position % 10) > 3) {	// collones trop éloignées
-					
-				document.getElementById('case' + i + j).style.opacity = 0.5;
+				caseNon(i,j);
 			}
 			// Les cases qui sont dans la croix
 			else if (position % 10 == j){			//même collone
@@ -132,5 +131,8 @@ function caseOui(position,i,j){
  * @returns
  */
 function caseNon(i,j){
+	var plateau =  getPlateau();
+	if(plateau[10*i+j] != 1){
 	document.getElementById('case' + i + j).style.opacity = 0.5;
+	}
 }

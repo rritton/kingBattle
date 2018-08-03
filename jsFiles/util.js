@@ -99,10 +99,9 @@ function voisinExtend(position, gauche, haut, droite, bas){
 	return false;
 }
 
-
-
 function lancementCombat(){
 	document.getElementById('zoneDeJeu').innerHTML = "C'est l'heure du...du... DUEL";
+	setTimeout(function(){document.location.href="combat.html"}, 2000);
 }
 
 function Joueur(nom, image, arme){
@@ -126,12 +125,41 @@ function Joueur(nom, image, arme){
 		this.armeADeposer = null;
 		this.depose = false;
 	}
-//	this.save = function(i){
-//		sessionStorage.setItem('joueur'+i,this);
-//	}
-//	this.load = function(i){
-//		this = sessionsStorage.getItem('joueur'+i);
-//	}
+	this.save = function(){
+		sessionStorage.setItem(this.nom, JSON.stringify(this));
+	}
+}
+
+function JoueurStorage(nom){
+	var obj = JSON.parse(sessionStorage.getItem(nom));
+
+	//les attributs
+	this.nom = obj.nom;
+	this.pv = obj.pv;
+	this.image = obj.image;
+	this.armeActuel = obj.armeActuel;
+	this.armeADeposer = obj.armeADeposer;
+	this.depose = obj.depose;
+	
+	//Suppression d'obj
+	//delete this.obj;
+	
+	//méthodes
+	this.changeArmeSimple = function(arme){
+		this.armeActuel = arme;
+	}
+	this.changeArmeSauvgarde = function(arme){
+		this.armeADeposer = this.armeActuel;
+		this.depose = true;
+		this.armeActuel = arme;
+	}
+	this.resetArmeDeposer = function(){
+		this.armeADeposer = null;
+		this.depose = false;
+	}
+	this.save = function(){
+		sessionStorage.setItem(this.nom, JSON.stringify(this));
+	}
 }
 
 
