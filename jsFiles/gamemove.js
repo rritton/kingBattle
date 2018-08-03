@@ -10,12 +10,6 @@ function jeu() {
 
 	moveAutorise(ouEstLeJoueur(getRandomInt(1, 3)));
 	
-	var joueur1 = new Joueur('Bart','image',1);
-	joueur1.save();
-
-	var joueur2 = new JoueurStorage('Bart');
-	joueur2.nom = 'Brat';
-	joueur2.save();
 }
 
 /**

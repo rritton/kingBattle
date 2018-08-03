@@ -1,3 +1,28 @@
+function instanciation(){
+	//Création des armes
+	var cordeASauter = new Arme("Corde à sauter", "../imgFiles/corde_sauter.jpg", 5);
+	saveArme(cordeASauter);
+	var hache = new Arme("Hache", "../imgFiles/hache.jpg", 10);
+	saveArme(hache);
+	var grenade = new Arme("Grenade", "../imgFiles/grenade.jpg", 30);
+	saveArme(grenade);
+	var bazooka = new Arme("Bazooka", "../imgFiles/bazooka.jpg", 50);
+	saveArme(bazooka);
+	var pointDeFeu = new Arme("Point de feu", "../imgFiles/corde_sauter.jpg", 100);
+	saveArme(pointDeFeu);
+	
+	//Création joueur1
+	var brand = new Joueur("brand", "../imgFiles/Brand.png", hache);
+	brand.save();
+	
+	//Création joueur2
+	var jinx = new Joueur("Jinx", "../imgFiles/Jinx.png", hache);
+	jinx.save();
+	
+	//création plateau
+	plateauGenerate();
+}
+
 /**
  * Génération du @plateau de jeu
  * 

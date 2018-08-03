@@ -112,18 +112,22 @@ function Joueur(nom, image, arme){
 	this.armeActuel = arme;
 	this.armeADeposer = null;
 	this.depose = false;
+	this.defense = false;
 	//méthodes
-	this.changeArmeSimple = function(arme){
-		this.armeActuel = arme;
-	}
-	this.changeArmeSauvgarde = function(arme){
+	this.changeArme = function(arme){
 		this.armeADeposer = this.armeActuel;
 		this.depose = true;
 		this.armeActuel = arme;
 	}
-	this.resetArmeDeposer = function(){
+	this.poserArme = function(){
 		this.armeADeposer = null;
 		this.depose = false;
+	}
+	this.prepareDefense = function(){
+		this.defense = true;
+	}
+	this.activDefence = function(){
+		this.defense = false;
 	}
 	this.save = function(){
 		sessionStorage.setItem(this.nom, JSON.stringify(this));
@@ -140,9 +144,7 @@ function JoueurStorage(nom){
 	this.armeActuel = obj.armeActuel;
 	this.armeADeposer = obj.armeADeposer;
 	this.depose = obj.depose;
-	
-	//Suppression d'obj
-	//delete this.obj;
+	this.defense = obj.defense;
 	
 	//méthodes
 	this.changeArmeSimple = function(arme){
@@ -157,6 +159,12 @@ function JoueurStorage(nom){
 		this.armeADeposer = null;
 		this.depose = false;
 	}
+	this.prepareDefense = function(){
+		this.defense = true;
+	}
+	this.activDefence = function(){
+		this.defense = false;
+	}
 	this.save = function(){
 		sessionStorage.setItem(this.nom, JSON.stringify(this));
 	}
@@ -170,8 +178,17 @@ function Arme(nom, image, degats){
 	this.degats = degats;
 }
 
+function saveArme(arme){
+	sessionStorage.setItem(arme.nom, JSON.stringify(arme));
+}
 
-
+function ArmeStorage(nom){
+	var obj = JSON.parse(sessionStorage.getItem(nom));
+	//les attributs
+	this.nom = obj.nom;
+	this.image = obj.image;
+	this.degats = obj.degats;
+}
 
 
 
