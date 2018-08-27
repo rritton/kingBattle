@@ -14,11 +14,15 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 }
 
+/**
+ * 
+ * @version 2
+ * @returns
+ */
 function getPlateau(){
-	var plateauStringTable = sessionStorage.getItem('plateau');
-	var plateau = [ 100 ];
-	for(var i = 0; i < 200 ;i +=2){
-		plateau[i/2] = parseInt(plateauStringTable[i]);
+	var plateau = sessionStorage.getItem('plateau').split(",");
+	for(var i = 0; i < 100 ;i++){
+		plateau[i] = parseInt(plateau[i]);
 	}
  	return plateau;
 }
