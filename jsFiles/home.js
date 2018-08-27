@@ -1,30 +1,34 @@
-function instanciation(){
-	//Création des armes
-	var cordeASauter = new Arme("Corde à sauter", "../imgFiles/corde_sauter.jpg", 5);
+function instanciation() {
+	// Création des armes
+	var cordeASauter = new Arme("Corde à sauter",
+			"../imgFiles/corde_sauter.jpg", 3, 5);
 	saveArme(cordeASauter);
-	var hache = new Arme("Hache", "../imgFiles/hache.jpg", 10);
+	var hache = new Arme("Hache", "../imgFiles/hache.jpg", 5, 10);
 	saveArme(hache);
-	var grenade = new Arme("Grenade", "../imgFiles/grenade.jpg", 30);
+	var grenade = new Arme("Grenade", "../imgFiles/grenade.jpg", 1, 30);
 	saveArme(grenade);
-	var bazooka = new Arme("Bazooka", "../imgFiles/bazooka.jpg", 50);
+	var bazooka = new Arme("Bazooka", "../imgFiles/bazooka.jpg", 2, 50);
 	saveArme(bazooka);
-	var pointDeFeu = new Arme("Point de feu", "../imgFiles/corde_sauter.jpg", 100);
+	var pointDeFeu = new Arme("Point de feu", "../imgFiles/corde_sauter.jpg",
+			4, 100);
 	saveArme(pointDeFeu);
-	
-	//Création joueur1
-	var brand = new Joueur("brand", "../imgFiles/Brand.png", hache);
+
+	// Création joueur1
+	var brand = new Joueur("Brand", "../imgFiles/Brand.png", hache);
 	brand.save();
-	
-	//Création joueur2
+
+	// Création joueur2
 	var jinx = new Joueur("Jinx", "../imgFiles/Jinx.png", hache);
 	jinx.save();
-	
-	//création plateau
+
+	// création plateau
 	plateauGenerate();
 }
 
 /**
- * Génération du @plateau de jeu
+ * Génération du
+ * 
+ * @plateau de jeu
  * 
  * @param plateau
  * @returns
@@ -40,9 +44,9 @@ function plateauGenerate() {
 			plateau[i * 10 + j] = 0;
 		}
 	}
-	//Génération du nombre de cases interdites (entre 10 et 15)
+	// Génération du nombre de cases interdites (entre 10 et 15)
 	nbRock = getRandomInt(10, 16);
-	//Génération du nombre d'armes sur la carte (entre 1 et 4)
+	// Génération du nombre d'armes sur la carte (entre 1 et 4)
 	nbArme = getRandomInt(1, 5);
 	// Instalation des cases interdites
 	for (var i = 0; i < nbRock; i++) {
@@ -55,8 +59,8 @@ function plateauGenerate() {
 		}
 	}
 	// Instalation des armes
-	for (var i=0, numArme = 0, tabArmes = []; i < nbArme; i++) {
-		while(1){
+	for (var i = 0, numArme = 0, tabArmes = []; i < nbArme; i++) {
+		while (1) {
 			numArme = getRandomInt(0, 4) + 1;
 			if (tabArmes.indexOf(numArme) != -1) {
 				continue;
@@ -75,25 +79,16 @@ function plateauGenerate() {
 	// Instalation Joueur 1
 	while (1) {
 		var cas = getRandomInt(0, 100);
-		// les joueurs ne peuvent pas être sur le bord du plateau (choix
-		// personnel)
-		if (cas < 10 || cas % 10 == 0 || cas > 90 || cas % 10 == 9) {
-			continue;
-		}
 		if (plateau[cas] == 0) {
 			plateau[cas] = 3;
 			break;
 		}
 	}
-	savePlateau(plateau);
+	savePlateau(plateau);//L'appel de la fonction voisin() -dans la boucle- reclame que 
+						 //le plateau du localStorage connaisse la position du jour 1
 	// Instalation Joueur 2
 	while (1) {
 		var cas = getRandomInt(0, 100);
-		// les joueurs ne peuvent pas être sur le bord du plateau (choix
-		// personnel)
-		if (cas < 10 || (cas % 10) == 0 || cas > 90 || (cas % 10) == 9) {
-			continue;
-		}
 		// les joueurs ne peuvent être cote à cote
 		if (voisin(cas)) {
 			continue;

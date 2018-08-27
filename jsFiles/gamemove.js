@@ -9,7 +9,7 @@ function jeu() {
 	plateauAffich();
 
 	moveAutorise(ouEstLeJoueur(getRandomInt(1, 3)));
-	
+
 }
 
 /**
@@ -83,19 +83,31 @@ function plateauAffich() {
  * @param i
  * @param j
  * @returns
- * @version 2.0
+ * @version 3.0
  */
 function deplacement(position,i,j){
 
 	var plateau = getPlateau();
 	var caseDepart = plateau[position];
-	var caseArive = plateau[10*i+j];
-	
-	plateau[position] = caseArive;
+
+	var joueur = new JoueurStorage(plateau[position]);
+
+	if(joueur.depose == true){
+		plateau[position] = joueur.armeADeposer.num*2;
+		joueur.depose = false;
+	}
+	else {plateau[position] = 0}
+
+	if(plateau[10*i+j] != 0) {
+		joueur.armeADeposer = joueur.armeActuel;
+		joueur.depose = true;
+		joueur.armeActuel = ramasseArme(plateau[10*i+j]);
+	}
 	plateau[10*i+j] = caseDepart;
 
 	savePlateau(plateau);
-	
+	joueur.save();
+
 	if(voisin(10*i+j)){
 		lancementCombat();
 	}
@@ -108,3 +120,24 @@ function deplacement(position,i,j){
 	}
 }
 
+function ramasseArme(numArm){
+	var armeAuSol;
+	switch(numArm){
+	case 2: // case avec une arme : grenade
+		 armeAuSol = new ArmeStorage('Grenade');
+		break;
+	case 4: // case avec une arme : bazooka
+		 armeAuSol = new ArmeStorage('Bazooka');
+		break;
+	case 6: // case avec une arme : corde à sauter
+		 armeAuSol = new ArmeStorage('Corde à sauter');
+		break;
+	case 8: // case avec une arme : point de feu
+		 armeAuSol = new ArmeStorage('Point de feu');
+		break;
+	case 10: // case avec une arme : hache
+		 armeAuSol = new ArmeStorage('Hache');
+		break;
+	}
+	return armeAuSol;
+}

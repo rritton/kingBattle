@@ -16,7 +16,7 @@ function getRandomInt(min, max) {
 
 /**
  * 
- * @version 2
+ * @version 1.1
  * @returns
  */
 function getPlateau(){
@@ -32,6 +32,11 @@ function savePlateau(plateau){
 	sessionStorage.setItem('plateau',plateauString);
 }
 
+/**
+ * 
+ * @param joueur
+ * @returns
+ */
 function ouEstLeJoueur(joueur){
 	var plateau = getPlateau();
 	for(var i =0; i<100; i++){
@@ -138,15 +143,31 @@ function Joueur(nom, image, arme){
 	}
 }
 
-function JoueurStorage(nom){
+function JoueurStorage(qui){
+	var nom;
+	if (qui == 3){
+		nom = "Brand";
+	}
+	else if (qui == 5){
+		nom = "Jinx";
+	}
+	else {
+		alert("Erreur veuyez relancer la partie");
+		return 0;
+	}
 	var obj = JSON.parse(sessionStorage.getItem(nom));
+	
+	console.log(obj);
 
 	//les attributs
 	this.nom = obj.nom;
 	this.pv = obj.pv;
 	this.image = obj.image;
-	this.armeActuel = obj.armeActuel;
-	this.armeADeposer = obj.armeADeposer;
+	this.armeActuel = new ArmeStorage(obj.armeActuel.nom);
+	if(obj.depose) {
+	this.armeADeposer = new ArmeStorage(obj.armeADeposer.nom);
+	}
+	else this.armeADeposer = null;
 	this.depose = obj.depose;
 	this.defense = obj.defense;
 	
@@ -174,11 +195,11 @@ function JoueurStorage(nom){
 	}
 }
 
-
-function Arme(nom, image, degats){
+function Arme(nom, image, num, degats){
 	//les attributs
 	this.nom = nom;
 	this.image = image;
+	this.num = num;
 	this.degats = degats;
 }
 
@@ -191,6 +212,7 @@ function ArmeStorage(nom){
 	//les attributs
 	this.nom = obj.nom;
 	this.image = obj.image;
+	this.num = obj.num;
 	this.degats = obj.degats;
 }
 

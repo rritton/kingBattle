@@ -132,7 +132,7 @@ function caseOui(position,i,j){
  */
 function caseNon(i,j){
 	var plateau =  getPlateau();
-	if(plateau[10*i+j] != 1){
+	if(plateau[10*i+j] == 0){
 	document.getElementById('case' + i + j).style.opacity = 0.5;
 	}
 }
