@@ -157,8 +157,6 @@ function JoueurStorage(qui){
 	}
 	var obj = JSON.parse(sessionStorage.getItem(nom));
 	
-	console.log(obj);
-
 	//les attributs
 	this.nom = obj.nom;
 	this.pv = obj.pv;
@@ -216,6 +214,8 @@ function ArmeStorage(nom){
 	this.degats = obj.degats;
 }
 
-
+function pasDeParcour(position,i,j){
+	return (10*i+j-position)/Math.abs(10*i+j-position);
+}
 
 

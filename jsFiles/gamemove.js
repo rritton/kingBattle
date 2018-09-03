@@ -98,6 +98,31 @@ function deplacement(position,i,j){
 	}
 	else {plateau[position] = 0}
 
+	if(position%10 == j){
+		for(var k = 10*pasDeParcour(position,i,j); 
+				(10*i+j) <= (position + k)  ^ (position + k) <= (10*i+j); 
+				k += 10*pasDeParcour(position,i,j)){
+			
+			if(plateau[position+k] != 0) {
+				joueur.armeADeposer = joueur.armeActuel;
+				joueur.armeActuel = ramasseArme(plateau[position+k]);
+				plateau[position+k] = joueur.armeADeposer.num*2;
+			}
+		}
+	}
+	else {
+		for(var k = pasDeParcour(position,i,j); 
+				(10*i+j) <= (position + k) ^ (position + k) <= (10*i+j); 
+				k += pasDeParcour(position,i,j)){
+			
+			if(plateau[position+k] != 0) {
+				joueur.armeADeposer = joueur.armeActuel;
+				joueur.armeActuel = ramasseArme(plateau[position+k]);
+				plateau[position+k] = joueur.armeADeposer.num*2;
+			}
+		}
+	}
+
 	if(plateau[10*i+j] != 0) {
 		joueur.armeADeposer = joueur.armeActuel;
 		joueur.depose = true;
@@ -124,19 +149,19 @@ function ramasseArme(numArm){
 	var armeAuSol;
 	switch(numArm){
 	case 2: // case avec une arme : grenade
-		 armeAuSol = new ArmeStorage('Grenade');
+		armeAuSol = new ArmeStorage('Grenade');
 		break;
 	case 4: // case avec une arme : bazooka
-		 armeAuSol = new ArmeStorage('Bazooka');
+		armeAuSol = new ArmeStorage('Bazooka');
 		break;
 	case 6: // case avec une arme : corde à sauter
-		 armeAuSol = new ArmeStorage('Corde à sauter');
+		armeAuSol = new ArmeStorage('Corde à sauter');
 		break;
 	case 8: // case avec une arme : point de feu
-		 armeAuSol = new ArmeStorage('Point de feu');
+		armeAuSol = new ArmeStorage('Point de feu');
 		break;
 	case 10: // case avec une arme : hache
-		 armeAuSol = new ArmeStorage('Hache');
+		armeAuSol = new ArmeStorage('Hache');
 		break;
 	}
 	return armeAuSol;
